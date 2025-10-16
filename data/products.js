@@ -1,22 +1,28 @@
-const { describe } = require("node:test");
-
 // data/products.js
 const products = [
   {
-    id: "123e4567-e89b-12d3-a456-426614174000",
+    id: "1",
     name: "Laptop",
-    description: "High-performance laptop",
-    price: 999.99,
-    category: "Electronics",
+    description: "High-performance laptop with 16GB RAM",
+    price: 1200,
+    category: "electronics",
     inStock: true,
   },
   {
-    id: "123e4567-e89b-12d3-a456-426614174001",
+    id: "2",
     name: "Smartphone",
-    description: "Latest model smartphone",
-    price: 699.99,
-    category: "Electronics",
+    description: "Latest model with 128GB storage",
+    price: 800,
+    category: "electronics",
     inStock: true,
+  },
+  {
+    id: "3",
+    name: "Coffee Maker",
+    description: "Programmable coffee maker with timer",
+    price: 50,
+    category: "kitchen",
+    inStock: false,
   },
 ];
 
