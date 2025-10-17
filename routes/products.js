@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const products = require("../data/products");
+const auth = require("../middleware/auth");
+
+router.use(auth);
 
 // GET /api/products - List all products
 router.get("/", (req, res) => {
