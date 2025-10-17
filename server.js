@@ -4,7 +4,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
-const products = require("./data/products");
+const productRoutes = require("./routes/products");
 
 // Initialize Express app
 const app = express();
@@ -28,9 +28,8 @@ app.get("/", (req, res) => {
 // DELETE /api/products/:id - Delete a product
 
 // Example route implementation for GET /api/products
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
+
+app.use("/api/products", productRoutes);
 
 // TODO: Implement custom middleware for:
 // - Request logging
