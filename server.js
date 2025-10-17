@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 const productRoutes = require("./routes/products");
+const logger = require("./middleware/logger");
 
 // Initialize Express app
 const app = express();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware setup
 app.use(bodyParser.json());
+app.use(logger);
 
 // Root route
 app.get("/", (req, res) => {
