@@ -4,6 +4,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const products = require("../data/products");
 const auth = require("../middleware/auth");
+const validateProduct = require("../middleware/validation");
 
 router.use(auth);
 
@@ -22,7 +23,7 @@ router.get("/:id", (req, res) => {
 });
 
 // POST /api/products - Create a new product
-router.post("/", (req, res) => {
+router.post("/", auth, validateProduct, (req, res) => {
   const { name, description, price, category, inStock } = req.body;
   if (!name || !description || !price || !category || inStock === undefined) {
     return res.status(400).json({ message: "All fields are required" });
@@ -40,7 +41,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT /api/products/:id - Update a product
-router.put("/:id", (req, res) => {
+router.put("/:id", validateProduct, (req, res) => {
   const product = products.find((p) => p.id === req.params.id);
   if (!product) {
     return res.status(404).json({ message: "Product not found" });
