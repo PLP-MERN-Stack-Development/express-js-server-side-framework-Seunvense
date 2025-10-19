@@ -58,4 +58,13 @@ router.delete("/:id", (req, res, next) => {
   res.json(deletedProduct);
 });
 
+// Test async error
+router.get("/test-async-error", async (req, res, next) => {
+  try {
+    throw new Error("Async error test");
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
