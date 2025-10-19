@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 const productRoutes = require("./routes/products");
 const logger = require("./middleware/logger");
+const { errorHandler } = require("./middleware/error");
 
 // Initialize Express app
 const app = express();
@@ -32,6 +33,8 @@ app.get("/", (req, res) => {
 // Example route implementation for GET /api/products
 
 app.use("/api/products", productRoutes);
+
+app.use(errorHandler);
 
 // TODO: Implement custom middleware for:
 // - Request logging

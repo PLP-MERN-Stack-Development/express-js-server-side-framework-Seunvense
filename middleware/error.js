@@ -15,4 +15,13 @@ class ValidationError extends Error {
   }
 }
 
-module.exports = { NotFoundError, ValidationError };
+const errorHandler = (err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(status).json({
+    error: err.name || "Error",
+    message,
+  });
+};
+
+module.exports = { NotFoundError, ValidationError, errorHandler };
