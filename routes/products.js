@@ -9,10 +9,19 @@ const { NotFoundError, ValidationError } = require("../middleware/error");
 
 router.use(auth);
 
+// ✅ GET all or filter by category
 router.get("/", (req, res) => {
-  res.json(products);
+  const { category } = req.query;
+  let filteredProducts = products;
+  if (category) {
+    filteredProducts = products.filter(
+      (p) => p.category.toLowerCase() === category.toLowerCase()
+    );
+  }
+  res.json(filteredProducts);
 });
 
+// ✅ GET single product by ID
 router.get("/:id", (req, res, next) => {
   const product = products.find((p) => p.id === req.params.id);
   if (!product) {
@@ -56,15 +65,6 @@ router.delete("/:id", (req, res, next) => {
   }
   const deletedProduct = products.splice(index, 1)[0];
   res.json(deletedProduct);
-});
-
-// Test async error
-router.get("/test-async-error", async (req, res, next) => {
-  try {
-    throw new Error("Async error test");
-  } catch (err) {
-    next(err);
-  }
 });
 
 module.exports = router;
