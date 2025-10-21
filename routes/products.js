@@ -11,14 +11,22 @@ router.use(auth);
 
 // ✅ GET all or filter by category
 router.get("/", (req, res) => {
-  const { category } = req.query;
+  const { category, page = 1, limit = 2 } = req.query;
   let filteredProducts = products;
   if (category) {
     filteredProducts = products.filter(
       (p) => p.category.toLowerCase() === category.toLowerCase()
     );
   }
-  res.json(filteredProducts);
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+  res.json({
+    page: Number(page),
+    limit: Number(limit),
+    total: filteredProducts.length,
+    products: paginatedProducts,
+  });
 });
 
 // ✅ GET single product by ID
