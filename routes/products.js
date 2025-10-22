@@ -53,6 +53,14 @@ router.get("/search", (req, res, next) => {
   res.json(results);
 });
 
+router.get("/stats", (req, res) => {
+  const stats = products.reduce((acc, p) => {
+    acc[p.category] = (acc[p.category] || 0) + 1;
+    return acc;
+  }, {});
+  res.json(stats);
+});
+
 // ✅ GET single product by ID
 router.get("/:id", (req, res, next) => {
   const product = products.find((p) => p.id === req.params.id);
