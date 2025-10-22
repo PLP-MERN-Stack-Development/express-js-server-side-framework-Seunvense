@@ -7,9 +7,11 @@ const auth = require("../middleware/auth");
 const validateProduct = require("../middleware/validation");
 const { NotFoundError, ValidationError } = require("../middleware/error");
 
+// console.log("Loaded products:", products);
+
 router.use(auth);
 
-// ✅ GET all or filter by category
+// ✅ GET all or filter by category and add pagination
 router.get("/", (req, res) => {
   const { category, page = 1, limit = 2 } = req.query;
   let filteredProducts = products;
@@ -27,6 +29,28 @@ router.get("/", (req, res) => {
     total: filteredProducts.length,
     products: paginatedProducts,
   });
+});
+
+router.get("/search", (req, res, next) => {
+  // console.log(">>> SEARCH ROUTE CALLED with name:", req.query.name);
+
+  const { name } = req.query;
+
+  if (!name) {
+    return next(new ValidationError("Search term is required"));
+  }
+
+  const results = products.filter((p) =>
+    p.name.toLowerCase().includes(name.toLowerCase())
+  );
+
+  // if (results.length === 0) {
+  // console.log(">>> No results found");
+  //  return res.json([]); // Just return empty list
+  //}
+
+  // console.log(">>> Found results:", results);
+  res.json(results);
 });
 
 // ✅ GET single product by ID
