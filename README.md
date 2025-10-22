@@ -1,62 +1,46 @@
-# Express.js RESTful API Assignment
+# Express.js Product API
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+A RESTful API built with Express.js for managing products, implementing CRUD operations, middleware, error handling, and advanced features.
 
-## Assignment Overview
+## Setup Instructions
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
-
-## Getting Started
-
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
-
-## Files Included
-
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
-
-## Requirements
-
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+1. Install Node.js (v18+): https://nodejs.org
+2. Clone the repo: `git clone https://github.com/PLP-MERN-Stack-Development/express-js-server-side-framework-Seunvense.git`
+3. Navigate to the repo: `cd express-js-server-side-framework-Seunvense`
+4. Install dependencies: `npm install`
+5. Start the server: `node server.js`
+   The server will run at `http://localhost:3000` (or the port specified in `.env`).
+6. **Test endpoints**: Use tools like Postman, curl, or a browser to make requests. All `/api/products/*` routes require the header `x-api-key: my-secret-api-key`.
 
 ## API Endpoints
 
-The API will have the following endpoints:
+All endpoints under `/api/products` require the header `x-api-key: my-secret-api-key`.
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+| Method | Endpoint                     | Description                                                      |
+| ------ | ---------------------------- | ---------------------------------------------------------------- |
+| GET    | `/`                          | Returns a welcome message.                                       |
+| GET    | `/api/products`              | Lists all products (supports `?category=`, `?page=`, `?limit=`). |
+| GET    | `/api/products/:id`          | Gets a product by ID.                                            |
+| POST   | `/api/products`              | Creates a new product.                                           |
+| PUT    | `/api/products/:id`          | Updates a product by ID.                                         |
+| DELETE | `/api/products/:id`          | Deletes a product by ID.                                         |
+| GET    | `/api/products/search?name=` | Searches products by name (partial match).                       |
+| GET    | `/api/products/stats`        | Returns product counts by category.                              |
 
-## Submission
+## Request/Response Examples
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+- **GET /api/products?category=electronics**:
 
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
+curl -H "x-api-key: my-secret-api-key" http://localhost:3000/api/products?category=electronics
 
-## Resources
+POST /api/products:
 
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+curl -X POST http://localhost:3000/api/products -H "x-api-key: my-secret-api-key" -H "Content-Type: application/json" -d '{"name":"Tablet","description":"10-inch tablet","price":300,"category":"electronics","inStock":true}'
+
+GET /api/products/search?name=lap:
+
+curl -H "x-api-key: my-secret-api-key" http://localhost:3000/api/products/search?name=lap
+
+GET /api/products/stats:
+
+curl -H "x-api-key: my-secret-api-key" http://localhost:3000/api/products/stats
